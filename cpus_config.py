@@ -52,8 +52,6 @@ def get_cpu_info_from_proc(path):
             processor = res[-1]["processor"]
             node_files = glob.glob("/sys/devices/system/cpu/cpu%d/node*" % processor)
             if len(node_files):
-                print node_files
-                print os.path.basename(node_files[0])[4:]
                 res[-1]["node"] = int(os.path.basename(node_files[0])[4:])
     return res
 
@@ -61,6 +59,7 @@ if __name__ == "__main__":
     print(get_cpu_info_from_sys("online"))
     result = get_cpu_info_from_proc("/proc/cpuinfo")
     a = 0
+    print len(result)
     for sp in result:
         print a
         print sp
