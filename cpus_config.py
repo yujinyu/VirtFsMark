@@ -43,16 +43,18 @@ def get_cpu_info_from_proc(path):
 
     res = []
     for block in file(path, "r").read().split("\n\n"):
-        if len (block.strip()):
+        if len(block.strip()):
             res.append({})
             for line in block.splitlines():
                 k, v = map(str.strip, line.split(":", 1))
                 res[-1][k] = is_int(v)
             # Try to get additional info
             processor = res[-1]["processor"]
-            nodefiles = glob.glob("/sys/devices/system/cpu/cpu%d/node*" % processor)
-            if len(nodefiles):
-                res[-1]["node"] = int(os.path.basename(nodefiles[0])[4:])
+            node_files = glob.glob("/sys/devices/system/cpu/cpu%d/node*" % processor)
+            if len(node_files):
+                print node_files
+                print os.path.basename(node_files[0])[4:]
+                res[-1]["node"] = int(os.path.basename(node_files[0])[4:])
     return res
 
 if __name__ == "__main__":
