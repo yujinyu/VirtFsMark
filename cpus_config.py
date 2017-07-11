@@ -1,6 +1,8 @@
 import os
 import glob
 
+path_proc = "/proc/cpuinfo"
+path_proc = "/sys/devices/system/cpu/"
 
 def is_int(s):
     if s.isdigit():
@@ -33,7 +35,7 @@ def parse_range(r):
 
 
 def get_cpu_info_from_sys(name):
-    return parse_range(file("/sys/devices/system/cpu/%s" % name).read())
+    return parse_range(file(path_proc + name).read())
 
 
 def get_cpu_info_from_proc(path):
@@ -50,18 +52,23 @@ def get_cpu_info_from_proc(path):
                 res[-1][k] = is_int(v)
             # Try to get additional info
             processor = res[-1]["processor"]
-            node_files = glob.glob("/sys/devices/system/cpu/cpu%d/node*" % processor)
+            node_files = glob.glob(path_proc + "cpu%d/node*" % processor)
             if len(node_files):
                 res[-1]["node"] = int(os.path.basename(node_files[0])[4:])
     return res
 
+
+def set_cpu_onoff(cpuid, onoff):
+    path = path_proc + "cpu%d/online" % int(cpuid)
+    print >> file(path, onoff)
+
+
+
+
+
+
+
 if __name__ == "__main__":
     print(get_cpu_info_from_sys("online"))
     result = get_cpu_info_from_proc("/proc/cpuinfo")
-    a = 0
-    print len(result)
-    for sp in result:
-        print a
-        print sp
-        print ("")
-        a += 1
+    num_cpus = len(result)
