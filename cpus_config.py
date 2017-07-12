@@ -103,7 +103,7 @@ def set_cpu_onoff(cpuid, onoff):
 if __name__ == "__main__":
     print(get_cpu_info_from_sys ("online"))
     result = get_cpu_info_from_proc ("/proc/cpuinfo")
-    set_cpu_onoff(2-13,0)
+    set_cpu_onoff("2-13", 0)
     print(get_cpu_info_from_sys ("online"))
     result = get_cpu_info_from_proc ("/proc/cpuinfo")
     print result
