@@ -70,7 +70,7 @@ def parse_range(r):
 
 
 def get_cpu_info_from_sys(name):
-    return parse_range (file (path_proc + name).read ())
+    return parse_range (file (path_sys + name).read ())
 
 
 def get_cpu_info_from_proc(path):
