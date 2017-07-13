@@ -7,8 +7,8 @@ else
 endif
 
 # directory
-SRC = src
-BIN = bin
+SRC = test_set
+BIN = src
 
 # cflags and source code
 CFLAGS += $(DEFS) -Wall -g -O3 -D_GNU_SOURCE
