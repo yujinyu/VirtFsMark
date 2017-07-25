@@ -1,19 +1,14 @@
 # -*- coding: UTF-8 -*-
 import os
-import sys
-
-import docker
-
 from variables_defined import docker_svc_path
 
 
 #
 # 测试之前删除其他运行的容器，并拉去测试需要的镜像
 #
-def pre_work_for_docker(img):
+def pre_work_for_docker(clt, img):
     try:
-        client = docker.from_env ()
-        ids_list = client.containers.list()
+        ids_list = clt.containers.list()
         if len(ids_list) > 0:
             yn = input("Some containers are running! "
                        "Stop them and continue to test ?[Y,N]")
@@ -23,39 +18,10 @@ def pre_work_for_docker(img):
                     cid.remove()
             else:
                 exit(0)
-        client.images.pull(img)
+        clt.images.pull(img)
     except:
         print("Prepare work Failed!")
         exit(-1)
-
-
-#
-# 将dev设备格式化为fs类型文件系统
-#
-def dev_mkfs(fs, dev):
-    """
-        param fs: target filesystem, e.g. ext4
-        param dev: format device, e.g. /dev/sdb
-        return: sucess 0, fail 1
-    """
-    if fs not in []:
-        print >> sys.stderr, ("Unrecognized file system %s" % fs)
-        exit(-1)
-    if fs in ["ext4", "btrfs", "xfs"]:
-        os.system("mkfs." + fs + "-f " + dev)
-    elif fs in ["zfs"]:
-        os.system("zpool create -f zfspool " + dev)
-        os.system("zfs create -o mountpoint=/var/lib/docker zfspool/docker")
-
-
-#
-# 如果之前文件系统类型为zfs，则需要使用之后对其进行销毁
-#
-def destory_fs(dev):
-    pre_fs = os.popen("df -T|grep " + dev + " |awk \'{print $2}\'").readlines()[0]
-    if pre_fs in ["zfs"]:
-        os.system("zfs destroy -r zfspool")
-        os.system("zpool destroy zfspool")
 
 
 #
@@ -125,4 +91,13 @@ def del_stopped_container(clt):
     if len(ids_list) > 0:
         for cid in ids_list:
             cid.remove()
+#
+# 创建并运行一定数目的执行指定命令的容器
+#
 
+def create_and_run(clt, image, cmd, vol, num):
+    for i in range(0, num):
+        clt.containers.create(image=image, command=cmd, volumes=vol, working_dir='/')
+    ids_list = clt.containers.list(True)
+    for cid in ids_list:
+        cid.start()

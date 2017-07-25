@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 import subprocess
 
 def is_installed(pkg_name):

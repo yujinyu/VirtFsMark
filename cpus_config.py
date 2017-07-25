@@ -1,6 +1,6 @@
+# -*- coding: UTF-8 -*-
 import glob
 import os
-
 from variables_defined import path_proc, path_sys
 
 

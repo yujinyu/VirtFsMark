@@ -1,8 +1,9 @@
+# -*- coding: UTF-8 -*-
 path_proc = "/proc/cpuinfo"
 path_sys = "/sys/devices/system/cpu/"
 
 docker_svc_path = "/lib/systemd/system/docker.service"
-images = "192.168.3.51:5000/admin/virtfsmark:latest"
+image = "192.168.3.51:5000/admin/virtfsmark:latest"
 
 pkg_list = ["xfsprogs", "btrfs-tools", "f2fs-tools", "jfsutils", "reiserfsprogs", "nilfs-tools", "zfsutils-linux"]
 
