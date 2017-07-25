@@ -1,9 +1,13 @@
+# -*- coding: UTF-8 -*-
 import docker
 import os
 import sys
-from variables_defined import docker_svc_path
+from .variables_defined import docker_svc_path
 
 
+#
+# 测试之前删除其他运行的容器，并拉去测试需要的镜像
+#
 def pre_work_for_docker(img):
     try:
         client = docker.from_env ()
@@ -23,6 +27,9 @@ def pre_work_for_docker(img):
         exit(-1)
 
 
+#
+# 将dev设备格式化为fs类型文件系统
+#
 def dev_mkfs(fs, dev):
     """
         param fs: target filesystem, e.g. ext4
@@ -39,6 +46,9 @@ def dev_mkfs(fs, dev):
         os.system("zfs create -o mountpoint=/var/lib/docker zfspool/docker")
 
 
+#
+# 如果之前文件系统类型为zfs，则需要使用之后对其进行销毁
+#
 def destory_fs(dev):
     pre_fs = os.popen("df -T|grep " + dev + " |awk \'{print $2}\'").readlines()[0]
     if pre_fs in ["zfs"]:
@@ -46,6 +56,9 @@ def destory_fs(dev):
         os.system("zpool destroy zfspool")
 
 
+#
+# 停止docker daemon运行
+#
 def docker_svc_stop():
     """
     :return:
@@ -62,6 +75,9 @@ def docker_svc_stop():
         return -1
 
 
+#
+# 重启docker daemon
+#
 def docker_svc_restart():
     """
     :return:
@@ -75,7 +91,10 @@ def docker_svc_restart():
         return -1
 
 
-def change_storage_driver(new_driver):
+#
+# 将docker容器的存储驱动配置为new_driver
+#
+def config_storage_driver(new_driver):
     fpr = open(docker_svc_path, 'r+')
     lines_in_file = fpr.readlines()
     fpr.close()
@@ -96,6 +115,9 @@ def change_storage_driver(new_driver):
     fpw.close()
 
 
+#
+# 删除已经停止运行的容器
+#
 def del_stopped_container(clt):
     ids_list = clt.containers.list(True)
     if len(ids_list) > 0:

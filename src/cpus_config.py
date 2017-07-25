@@ -1,8 +1,10 @@
 import os
 import glob
-from variables_defined import path_proc, path_sys
+from .variables_defined import path_proc, path_sys
 
-
+#
+# 判断s是否为数字
+#
 def is_int(s):
     if s.isdigit():
         return int(s)
@@ -10,9 +12,8 @@ def is_int(s):
 
 
 #
-# processor Range syntax
+# 将CPU编号（例如，“1-4,8,11-12"）处理为编号列表，即[1,2,3,4,8,11,12]
 #
-
 def parse_range(r):
     """
         Parse an integer sequence such as '0-3,8-11'.
@@ -33,17 +34,23 @@ def parse_range(r):
     return res
 
 
+#
+# 从/sys/devices/system/cpu/目录下获取相应的CPU信息，例如name="online"可以获得当前主机启用的CPU编号
+#
 def get_cpus_parse_from_sys(name):
-    return parse_range(file(path_sys + name).read ())
+    return parse_range(open(path_sys + name).read())
 
 
+#
+# 从/proc/cpuinfo获取启用的CPU的详细信息
+#
 def get_cpus_info_from_proc():
     """
         Read a cpuinfo file and return [{field : value}].
     """
 
     res = []
-    for block in file(path_proc, "r").read().split("\n\n"):
+    for block in open(path_proc, "r").read().split("\n\n"):
         if len(block.strip()):
             res.append({})
             for line in block.splitlines():
@@ -57,13 +64,19 @@ def get_cpus_info_from_proc():
     return res
 
 
+#
+# 启用或者禁用编号为cpuid的CPU，其中onoff为1表示启用，0则表示禁用
+#
 def set_cpus_onoff(cpuid, onoff):
     res = parse_range(cpuid)
     for ids in res:
         path = path_sys + "cpu%d/online" % int(ids)
-        print >> file(path, "w"), onoff
+        print >> open(path, "w"), onoff
 
 
+#
+# 获取主机CPU的总个数
+#
 def get_num_cpus():
-    return len(parse_range(file(path_sys + "online").read()))
+    return len(parse_range(open(path_sys + "present").read()))
 
