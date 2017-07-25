@@ -36,7 +36,7 @@ CPU_POLICY = $(BIN)/cpu-sequences | $(BIN)/gen_corepolicy
 
 # target
 all: $(BINS) $(LIBS) $(TC)
-
+000
 $(BIN)/%: $(SRC)/%.c $(DEPS) $(SRC)/cpupol.h $(BIN)/cpupol.py
 	@echo "CC	$@"
 	$(Q)$(CC) $< $(CFLAGS) -o $@ $(LIBS) $(TC) $(LDFLAGS)

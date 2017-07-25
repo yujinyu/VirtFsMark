@@ -1,8 +1,10 @@
 # -*- coding: UTF-8 -*-
-import docker
 import os
 import sys
-from .variables_defined import docker_svc_path
+
+import docker
+
+from variables_defined import docker_svc_path
 
 
 #

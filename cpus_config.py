@@ -1,6 +1,8 @@
-import os
 import glob
-from .variables_defined import path_proc, path_sys
+import os
+
+from variables_defined import path_proc, path_sys
+
 
 #
 # 判断s是否为数字

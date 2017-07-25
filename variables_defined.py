@@ -4,6 +4,7 @@ path_sys = "/sys/devices/system/cpu/"
 docker_svc_path = "/lib/systemd/system/docker.service"
 images = "192.168.3.51:5000/admin/virtfsmark:latest"
 
+pkg_list = ["xfsprogs", "btrfs-tools", "f2fs-tools", "jfsutils", "reiserfsprogs", "nilfs-tools", "zfsutils-linux"]
 
 storage_devices = ["SSD", "HDD"]
 backing_fs = ["ext4", "btrfs", "xfs", "ext4_no_jnl", "tmpfs", "zfs"]
