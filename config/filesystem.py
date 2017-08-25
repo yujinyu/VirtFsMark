@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 import sys, os
 
+
 #
 # 将dev设备格式化为fs类型文件系统
 #

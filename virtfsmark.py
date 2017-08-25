@@ -1,9 +1,28 @@
 # -*- coding: UTF-8 -*-
-import signal, docker
-from env_config import *
-from cpus_config import *
-from container_config import *
-from variables_defined import pkg_list, image
+import docker
+
+from config.container import *
+from config.cpus import *
+
+pkg_list = ["xfsprogs", "btrfs-tools", "f2fs-tools", "jfsutils", "reiserfsprogs", "nilfs-tools", "zfsutils-linux"]
+image = "192.168.3.51:5000/admin/ubuntu-sysbench:ex-fs"
+
+
+def is_installed(pkg_name):
+    state, stout = subprocess.getstatusoutput("dpkg --get-selections | grep " + pkg_name + " | awk \'{print $2}\'")
+    if state == 0 and stout == "install":
+        return True
+    else:
+        return False
+
+
+def pkg_install(pkg_name):
+    state, stout = subprocess.getstatusoutput("sudo apt-get install -y " + pkg_name)
+    if state == 0:
+        return True
+    else:
+        return False
+
 
 def catch_ctrl_c(signum, frame):
     print ("cat Ctrl+C, Go to exit...")

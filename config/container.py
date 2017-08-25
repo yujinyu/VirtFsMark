@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 import os
-from variables_defined import docker_svc_path
+
+docker_svc_path = "/lib/systemd/system/docker.service"
 
 
 #

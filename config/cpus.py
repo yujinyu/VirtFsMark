@@ -1,8 +1,9 @@
 # -*- coding: UTF-8 -*-
 import glob
 import os
-from variables_defined import path_proc, path_sys
 
+path_proc = "/proc/cpuinfo"
+path_sys = "/sys/devices/system/cpu/"
 
 
 #
