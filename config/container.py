@@ -70,10 +70,10 @@ def config_storage_driver(new_driver):
     i = 0
     for line in lines_in_file:
         if "ExecStart" in line:
-            if "fd://" in line:  # ubuntu
+            if "fd://" in line:  # deb pkg arch
                 lines_in_file[i] = "ExecStart=/usr/bin/dockerd --insecure-registry 192.168.3.51:5000 -s " + \
                                    new_driver + " -H fd://" + line[-1]
-            else:  # centos
+            else:  # rpm pkg arch
                 lines_in_file[i] = "ExecStart=/usr/bin/dockerd --insecure-registry 192.168.3.51:5000 -s " + \
                                    new_driver + line[-1]
             break
