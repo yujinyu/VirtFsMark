@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 storage_devices = ["SSD", "HDD"]
 backing_fs = ["ext4", "btrfs", "xfs", "ext4_no_jnl", "tmpfs", "zfs"]
+storage_drivers = ["aufs", "overlay2", "btrfs", "xfs", "zfs"]
 bench_types = [
     # write/write
     "DWAL",
@@ -33,4 +34,3 @@ bench_types = [
     "DRBM",
     "DRBL"
 ]
-

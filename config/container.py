@@ -92,10 +92,11 @@ def del_stopped_container(clt):
     if len(ids_list) > 0:
         for cid in ids_list:
             cid.remove()
+
+
 #
 # 创建并运行一定数目的执行指定命令的容器
 #
-
 def create_and_run(clt, image, cmd, vol, num):
     for i in range(0, num):
         clt.containers.create(image=image, command=cmd, volumes=vol, working_dir='/')
