@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import docker
-from config.container import *
-from config.cpus import *
+from configs.container import *
+from configs.cpus import *
 from run_config import *
 
 
