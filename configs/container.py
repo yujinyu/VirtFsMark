@@ -7,7 +7,7 @@ docker_svc_path = "/lib/systemd/system/docker.service"
 #
 # 测试之前删除其他运行的容器，并拉去测试需要的镜像
 #
-def pre_work_for_docker(clt, img):
+def pre_work_for_docker(clt, work_dir, img):
     try:
         ids_list = clt.containers.list()
         if len(ids_list) > 0:
@@ -19,7 +19,7 @@ def pre_work_for_docker(clt, img):
                     cid.remove()
             else:
                 exit(0)
-        clt.images.pull(img)
+        clt.images.build(path=work_dir, tag=img)
     except:
         print("Prepare work Failed!")
         exit(-1)
