@@ -20,8 +20,8 @@ def pre_work_for_docker(clt, work_dir, img):
             else:
                 exit(0)
         clt.images.build(path=work_dir, tag=img)
-    except:
-        print("Prepare work Failed!")
+    except Exception as e:
+        print("Prepare work Failed! \n %s" % (str(e)))
         exit(-1)
 
 
