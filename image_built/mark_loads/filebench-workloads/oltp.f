@@ -47,7 +47,7 @@ define fileset name=logfile,path=$dir,size=$logfilesize,filesizegamma=0,entries=
 
 define process name=lgwr,instances=1
 {
-  thread name=lgwr,memsize=$memperthread
+  thread name=lgwr,memsize=$memperthread,useism
   {
     flowop aiowrite name=lg-write,filesetname=logfile,
         iosize=256k,random,directio=$directio,dsync
@@ -59,7 +59,7 @@ define process name=lgwr,instances=1
 # Define database writer processes
 define process name=dbwr,instances=$ndbwriters
 {
-  thread name=dbwr,memsize=$memperthread
+  thread name=dbwr,memsize=$memperthread,useism
   {
     flowop aiowrite name=dbwrite-a,filesetname=datafiles,
         iosize=$iosize,workingset=$workingset,random,iters=100,opennext,directio=$directio,dsync
@@ -71,7 +71,7 @@ define process name=dbwr,instances=$ndbwriters
 
 define process name=shadow,instances=$nshadows
 {
-  thread name=shadow,memsize=$memperthread
+  thread name=shadow,memsize=$memperthread,useism
   {
     flowop read name=shadowread,filesetname=datafiles,
       iosize=$iosize,workingset=$workingset,random,opennext,directio=$directio
@@ -95,11 +95,3 @@ usage "       run runtime (e.g. run 60)"
 usage "Note - total filesize should be at least 2x physical memory size for conforming test)"
 usage "       i.e. if physmem = 4G, set filesize to 4G * 2 / 10, or 800m"
 usage "Note - this workload needs at least 512MB of of memory"
-
-####################################
-# re-configured values by fxmark
-####################################
-# set $dir=[test partition]
-# set $nshadows=[$cpu * 4]
-# set $ndbwriters=[$cpu * 2]
-# run [benchmark time]

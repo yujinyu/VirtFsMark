@@ -60,12 +60,3 @@ usage "       set \$meanappendsize=<value>  defaults to $meanappendsize"
 usage "       set \$iosize=<size>  defaults to $iosize"
 usage "       set \$meandirwidth=<size> defaults to $meandirwidth"
 usage "       run runtime (e.g. run 60)"
-
-
-####################################
-# re-configured values by fxmark
-####################################
-# set $dir=[test partition]
-# set $nthreads=[$cpu * 2]
-# run [benchmark time]
-

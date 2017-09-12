@@ -3,7 +3,7 @@ import os, docker
 from configs.container import *
 from configs.cpus import *
 
-image = "virtfsmark:f25"
+image = "virtfsmark:f26"
 
 if __name__ == "__main__":
     dockerfile = os.path.join(os.getcwd(),"image_built/")
