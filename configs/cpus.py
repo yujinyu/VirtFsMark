@@ -74,8 +74,9 @@ def get_cpus_info_from_proc():
 def set_cpus_onoff(cpuid, onoff):
     res = parse_range(cpuid)
     for ids in res:
-        path = path_sys + "cpu%d/online" % int(ids)
-        print >> open(path, "w"), onoff
+        fp = open(path_sys + "cpu%d/online" % int(ids), "w")
+        print(onoff, file=fp)
+        fp.close()
 
 
 #
