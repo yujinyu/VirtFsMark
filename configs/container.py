@@ -20,8 +20,6 @@ def random_str(randomlength=6):
 #
 def pre_work_for_docker(clt, work_dir, image):
     try:
-        if clt.images.list(image) is not None:
-            clt.images.remove(image, force=True)
         clt.images.build(path=work_dir, tag=image)
         print("Build image Successfully!")
 

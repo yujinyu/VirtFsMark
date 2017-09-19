@@ -5,8 +5,10 @@ import time
 from configs.container import *
 from configs.cpus import *
 
+mariadb_subcmd = "mysqld_safe&"
+
 out_dir = "/mnt/result/"
-image = "virtfsmark:f26"
+image = "virtfsmark:fc26"
 
 if __name__ == "__main__":
     dockerfile = os.path.join(os.getcwd(), "image_built/")
