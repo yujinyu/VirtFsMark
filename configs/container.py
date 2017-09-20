@@ -18,11 +18,8 @@ def random_str(randomlength=6):
 #
 # 测试之前删除其他运行的容器，并拉去测试需要的镜像
 #
-def pre_work_for_docker(clt, work_dir, image):
+def prepare_work(clt):
     try:
-        clt.images.build(path=work_dir, tag=image)
-        print("Build image Successfully!")
-
         ids_list = clt.containers.list()
         if len(ids_list) > 0:
             yn = input("Stop containers and continue to test ?[Y/N]")
@@ -32,6 +29,21 @@ def pre_work_for_docker(clt, work_dir, image):
     except Exception as e:
         print(str(e))
         exit(-1)
+
+
+def build_images(clt, work_dir, image):
+    try:
+        clt.images.remove(image)
+    except Exception as e:
+        print(str(e))
+    finally:
+        try:
+            clt.images.build(path=work_dir, tag=image)
+            print("Build image Successfully!")
+        except Exception as e:
+            print("Failed to build image!")
+            print(str(e))
+            exit(-1)
 
 
 #
@@ -108,9 +120,12 @@ def del_containers(clt, force=False):
 #
 # 创建并运行一定数目的执行指定命令的容器
 #
-def create_and_run(clt, image, cmd, vol, num):
+def create_and_run(clt, image, cmd, port, vol, num):
     for i in range(0, num):
-        clt.containers.create(image=image, command=cmd + random_str(4), volumes=vol, working_dir='/')
+        port['3306'] = str(65535-i)
+        cmdd = cmd + random_str(4)
+        print(cmdd)
+        clt.containers.create(image=image, command=cmdd, ports=port, volumes=vol, working_dir='/')
     ids_list = clt.containers.list(True)
     for cid in ids_list:
         cid.start()
