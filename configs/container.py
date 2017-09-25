@@ -35,14 +35,15 @@ def build_images(clt, work_dir, image):
     try:
         clt.images.remove(image)
     except Exception as e:
-        print(str(e))
+        if "Not Found" not in str(e):
+            print(str(e))
     finally:
         try:
             clt.images.build(path=work_dir, tag=image)
             print("Build image Successfully!")
         except Exception as e:
             print("Failed to build image!")
-            print(str(e))
+            print("error log: %s" % str(e))
             exit(-1)
 
 
@@ -122,11 +123,10 @@ def del_containers(clt, force=False):
 #
 def create_and_run(clt, image, cmd, port, vol, num):
     for i in range(0, num):
-        port['3306'] = str(65535-i)
+        port['3306'] = str(65535 - i)
         cmdd = cmd + random_str(4)
         print(cmdd)
         clt.containers.create(image=image, command=cmdd, ports=port, volumes=vol, working_dir='/')
     ids_list = clt.containers.list(True)
     for cid in ids_list:
         cid.start()
-
