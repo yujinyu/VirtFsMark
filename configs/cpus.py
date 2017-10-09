@@ -23,18 +23,18 @@ def parse_range(r):
         Parse an integer sequence such as '0-3,8-11'.
         '' is the empty sequence.
     """
-    if not r.strip ():
+    if not r.strip():
         return []
 
     res = []
-    for piece in r.strip().split (","):
+    for piece in r.strip().split(","):
         lr = piece.split("-")
-        if len (lr) == 1 and lr[0].isdigit ():
-            res.append (int (lr[0]))
-        elif len (lr) == 2 and lr[0].isdigit () and lr[1].isdigit ():
-            res.extend (range (int (lr[0]), int (lr[1]) + 1))
+        if len(lr) == 1 and lr[0].isdigit():
+            res.append(int(lr[0]))
+        elif len(lr) == 2 and lr[0].isdigit() and lr[1].isdigit():
+            res.extend(range(int(lr[0]), int(lr[1]) + 1))
         else:
-            raise ValueError ("Invalid range syntax: %r" % r)
+            raise ValueError("Invalid range syntax: %r" % r)
     return res
 
 
@@ -75,7 +75,7 @@ def set_cpus_onoff(cpuid, onoff):
     res = parse_range(cpuid)
     for ids in res:
         fp = open(path_sys + "cpu%d/online" % int(ids), "w")
-        print(onoff, file=fp)
+        print(onoff, file = fp)
         fp.close()
 
 
@@ -84,4 +84,3 @@ def set_cpus_onoff(cpuid, onoff):
 #
 def get_num_cpus():
     return len(parse_range(open(path_sys + "present").read()))
-

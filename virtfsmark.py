@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
-import docker
 import time
+
+import docker
 
 from configs.container import *
 from configs.cpus import *
@@ -38,7 +39,5 @@ if __name__ == "__main__":
     prepare_work(client)
     # build_images(client, dockerfile, image)
     os.system("mkdir -p %s" % out_dir)
-
-
 
     # os.system("mv %s %s" % (out_dir, "%s/res%s" % (os.getcwd(),time.strftime('%y%m%d%H%M',time.localtime(time.time())))))
