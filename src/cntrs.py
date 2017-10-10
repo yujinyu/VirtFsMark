@@ -1,18 +1,9 @@
 # -*- coding: UTF-8 -*-
 import os
-from random import Random
+
+from src.env_config import random_str
 
 docker_svc_path = "/lib/systemd/system/docker.service"
-
-
-def random_str(randomlength=6):
-    string = ""
-    chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789"
-    length = len(chars) - 1
-    random = Random()
-    for l in range(randomlength):
-        string += chars[random.randint(0, length)]
-    return string
 
 
 #

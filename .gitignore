@@ -1,3 +1,4 @@
 
 \.idea/
-configs/__pycache__/
+src/configs/__pycache__/
+__pycache__/

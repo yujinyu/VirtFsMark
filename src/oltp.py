@@ -1,17 +1,11 @@
-# -*- coding: UTF-8 -*-
+import docker
 import time
 
-import docker
-
-from configs.container import *
-from configs.cpus import *
-
-out_dir = "/mnt/result/"
-image = "virtfsmark:fc26"
-vol = {"/mnt": "/mnt"}
+from src.cntrs import create_and_run, del_containers
 
 
-def oltp_test(res_dir, type, duration, server_host):
+def oltp_test(image, volume, res_dir, type, duration, server_host):
+    client = docker.from_env()
     port = {'3306': '3306'}
     cmd_server = "./root/mark_loads/mysql_server.sh"
     client.containers.create(image, cmd_server, ports=port, hostname="mysql_server", name="mysql_server").start()
@@ -24,20 +18,8 @@ def oltp_test(res_dir, type, duration, server_host):
         # for cid in client.containers.list(True):
         #     cid.remove()
 
-        create_and_run(client, image, cmd + "%02d" % n + "-log-", port, vol, n)
+        create_and_run(client, image, cmd + "%02d" % n + "-log-", port, volume, n)
 
     while len(client.containers.list()) > 1:
         time.sleep(10)
     del_containers(client, True)
-
-
-if __name__ == "__main__":
-    dockerfile = os.path.join(os.getcwd(), "image_built/")
-    print("The path to Dockerfile is: %s." % dockerfile)
-
-    client = docker.from_env()
-    prepare_work(client)
-    # build_images(client, dockerfile, image)
-    os.system("mkdir -p %s" % out_dir)
-
-    # os.system("mv %s %s" % (out_dir, "%s/res%s" % (os.getcwd(),time.strftime('%y%m%d%H%M',time.localtime(time.time())))))

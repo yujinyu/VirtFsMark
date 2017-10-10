@@ -1,5 +1,6 @@
 # -*- coding: UTF-8 -*-
-import sys, os
+import os
+import sys
 
 
 #
@@ -9,10 +10,10 @@ def dev_mkfs(fs, dev):
     """
         param fs: target filesystem, e.g. ext4
         param dev: format device, e.g. /dev/sdb
-        return: sucess 0, fail 1
+        return: success 0, fail 1
     """
     if fs not in []:
-        print >> sys.stderr, ("Unrecognized file system %s" % fs)
+        print("Unrecognized file system %s" % fs, file=sys.stderr)
         exit(-1)
     if fs in ["ext4", "btrfs", "xfs"]:
         os.system("mkfs." + fs + "-f " + dev)
@@ -29,4 +30,3 @@ def destory_fs(dev):
     if pre_fs in ["zfs"]:
         os.system("zfs destroy -r zfspool")
         os.system("zpool destroy zfspool")
-
