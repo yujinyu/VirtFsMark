@@ -121,3 +121,7 @@ def create_and_run(clt, image, cmd, port, vol, num):
     ids_list = clt.containers.list(True)
     for cid in ids_list:
         cid.start()
+
+
+def create_and_run_simple(clt, image, cmd, vol):
+    clt.containers.create(image=image, command=cmd, volumes=vol, working_dir='/').start()

@@ -1,12 +1,16 @@
-import docker
 import time
+
+import docker
 
 from src.cntrs import create_and_run, del_containers
 
+image = "virtfsmark:oltp"
+volume = {"/mnt": "/mnt"}
+port = {'3306': '3306'}
 
-def oltp_test(image, volume, res_dir, type, duration, server_host):
+
+def oltp_test(res_dir, type, duration, server_host):
     client = docker.from_env()
-    port = {'3306': '3306'}
     cmd_server = "./root/mark_loads/mysql_server.sh"
     client.containers.create(image, cmd_server, ports=port, hostname="mysql_server", name="mysql_server").start()
     cmd_pre = "./root/mark_loads/%s %s %s %s" % ("mysql_pre.sh", type, duration, server_host)
