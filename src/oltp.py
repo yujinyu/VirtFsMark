@@ -2,7 +2,7 @@ import time
 
 import docker
 
-from src.cntrs import create_and_run, del_containers
+from src.funcModules.cntrs import create_and_run, del_containers
 
 image = "virtfsmark:oltp"
 volume = {"/mnt": "/mnt"}

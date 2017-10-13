@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 import os
 
-from src.env_config import random_str
+from src.funcModules.auxFuncs import random_str
 
 docker_svc_path = "/lib/systemd/system/docker.service"
 
