@@ -7,7 +7,7 @@ docker_svc_path = "/lib/systemd/system/docker.service"
 
 
 #
-# 测试之前删除其他运行的容器，并拉去测试需要的镜像
+# 测试之前删除其他运行的容器
 #
 def prepare_work(clt):
     try:
@@ -31,7 +31,7 @@ def build_images(clt, work_dir, image):
     finally:
         try:
             clt.images.build(path=work_dir, tag=image)
-            print("Build image Successfully!")
+            print("Build image %s Successfully!" % image)
         except Exception as e:
             print("Failed to build image!")
             print("error log: %s" % str(e))

@@ -1,27 +1,12 @@
 import os
 import time
-
 import docker
 
 from src.funcModules import cntrs, lock_stat
 
 image = "virtfsmark:file"
-dir2df = os.path.join(os.getcwd(), "image_built/")
-print("The path to Dockerfile is: %s." % dir2df)
 
-
-def filePrepare():
-    clt = docker.from_env()
-    cntrs.build_images(clt, dir2df, image)
-
-def fileTest(shareLevel, type, duration, server_host, res_dir):
-    if shareLevel == "H" or shareLevel == "h":
-        cntrs.create_and_run()
-    exit(0)
-
-
-
-def fio_test(clt, image, path2df, vol, outdir):
+def fio_test(clt, path2df, vol, outdir):
     cntrs.build_images(clt, path2df, image)
     os.system("mkdir -p /mnt/test && cd /mnt/test && touch file")
     cntrs.del_containers(clt, True)
