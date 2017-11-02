@@ -6,9 +6,13 @@ from src.funcModules import cntrs, lock_stat
 
 image = "virtfsmark:file"
 
-def fio_test(clt, path2df, vol, outdir):
-    cntrs.build_images(clt, path2df, image)
-    os.system("mkdir -p /mnt/test && cd /mnt/test && touch file")
+def build_image(clt_host, path2df):
+    clt_clt = docker.DockerClient(base_url="tcp://%s:2376" % clt_host)
+    cntrs.build_images(clt_clt, path2df, image)
+
+
+def fio_test(clt_host, vol, outdir):
+    clt = docker.DockerClient(base_url="tcp://%s:2376" % clt_host)
     cntrs.del_containers(clt, True)
     for i in [1,3,7,15]:
         lock_stat.start()

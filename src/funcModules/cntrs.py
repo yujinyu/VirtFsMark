@@ -22,7 +22,7 @@ def prepare_work(clt):
         exit(-1)
 
 
-def build_images(clt, work_dir, image):
+def build_image(clt, work_dir, image):
     try:
         clt.images.remove(image)
     except Exception as e:
