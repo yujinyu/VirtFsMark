@@ -34,20 +34,18 @@ if __name__ == "__main__":
         #    network.ab_svr(clt, path2df, "olnet1", "ab_svr1")
         #    network.test("192.168.3.75", "ab_svr1", "root", "135668", vol, tmp_dir, out_dir)
         #    network.test("192.168.3.79", "ab_svr1", "root", "135668", vol, tmp_dir, out_dir)
-        # if type == "file":
-        #    os.system("mkdir -p /mnt/test && cd /mnt/test "
-        #              "&& touch file")
-        #    os.system("mkdir -p %s" % out_dir)
-        #    os.system("mkdir -p %s" % tmp_dir)
-        #
-        #    file.build_image(clt_host, path2df)
-        #    file.fio_test(clt_host, vol, tmp_dir)
-        #    os.system("mv %s %s" % (tmp_dir, out_dir + "fileres" +
-        #                           time.strftime('%y%m%d%H%M', time.localtime(time.time()))))
+        if type == "file":
+            # os.system("mkdir -p /mnt/test && cd /mnt/test "
+            #           "&& touch file")
+            os.system("mkdir -p %s" % out_dir)
+            os.system("mkdir -p %s" % tmp_dir)
 
-        if type == "mutilfiles":
-            cntrs.build_image(clt, path2df, "virtfsmarks:mf")
-            cmd = "python /multifiles.py 128 10000"
-            cntrs.create_and_run_simple(clt,"virtfsmarks:mf", cmd, vol)
-
-
+            file.build_image(clt_host, path2df)
+            file.fio_test(clt_host, vol, tmp_dir)
+            os.system("mv %s %s" % (tmp_dir, out_dir + "Lfileres" +
+                                    time.strftime('%y%m%d%H%M', time.localtime(time.time()))))
+            #
+            # if type == "mutilfiles":
+            #     # cntrs.build_image(clt, path2df, "virtfsmarks:mf")
+            #     cmd = "python /multifiles.py 128 10000"
+            #     cntrs.create_and_run_simple(clt,"virtfsmarks:mf", cmd, vol)

@@ -8,7 +8,7 @@ image = "virtfsmark:file"
 
 def build_image(clt_host, path2df):
     clt_clt = docker.DockerClient(base_url="tcp://%s:2376" % clt_host)
-    cntrs.build_images(clt_clt, path2df, image)
+    cntrs.build_image(clt_clt, path2df, image)
 
 
 def fio_test(clt_host, vol, outdir):

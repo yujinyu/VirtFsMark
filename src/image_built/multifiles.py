@@ -31,7 +31,7 @@ class Write2file(multiprocessing.Process):
 if __name__ == "__main__":
     filenum = int(sys.argv[2])
     degree_of_parallelism = int(sys.argv[1])
-    type = ["B", "T"]
+    type = ["T","B"]
     jobs = []
     fp = open("/mnt/multifile%s-%s" % (str(degree_of_parallelism), time.strftime('%y%m%d%H%M', time.localtime(time.time()))), 'w')
     for tp in type:

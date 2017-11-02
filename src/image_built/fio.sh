@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-fio -filename=/mnt/test/file -direct=1 -thread -rw=$1 -ioengine=psync -bs=512k -size=2G -runtime=60 -name=mytest > $2
+fio -filename=/test/file -direct=1 -thread -rw=$1 -ioengine=psync -bs=1024k -size=4G -runtime=60 -name=mytest > $2

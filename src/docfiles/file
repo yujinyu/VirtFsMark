@@ -7,7 +7,7 @@
 FROM yujinyu/fedora:26
 MAINTAINER yujinyu
 
-# RUN mkdir -p /test && cd /test && touch file
+RUN mkdir -p /test && cd /test && touch file
 COPY fio.sh /
 RUN chmod +x /fio.sh
 RUN dnf install fio libaio-devel -y && dnf clean all

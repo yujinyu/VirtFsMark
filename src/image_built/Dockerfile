@@ -1,7 +1,14 @@
-FROM ubuntu:16.04
+# VERSION:0.1
+# FROM yujinyu/fedora:mariadb
+# MAINTAINER yujinyu
+# COPY mark_loads /root/mark_loads
+# RUN chmod +x /root/mark_loads/*.sh && dnf install make gcc sysbench -y && dnf clean all
+
+FROM yujinyu/fedora:26
 MAINTAINER yujinyu
 
-RUN mkdir -p /testB && touch /testB/file{1..10000}
-COPY multifiles.py /
-RUN chmod +x /multifiles.py
-RUN apt update && apt install python -y && apt clean all
+RUN mkdir -p /test && cd /test && touch file
+COPY fio.sh /
+RUN chmod +x /fio.sh
+RUN dnf install fio libaio-devel -y && dnf clean all
+
