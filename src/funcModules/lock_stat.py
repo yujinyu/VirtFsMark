@@ -10,10 +10,8 @@ def stop():
     os.system("echo 0 > /proc/sys/kernel/lock_stat")
 
 
-def get(dest_file, less=False, head=False):
-    if less == True:
-        fp = os.popen("less /proc/lock_stat")
-    elif head == True:
+def get(dest_file, head=False):
+    if head == True:
         fp = os.popen("grep : /proc/lock_stat | head")
     else:
         fp = os.popen("cat /proc/lock_stat")

@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 MAINTAINER yujinyu
 
-RUN mkdir -p /testB && touch /testB/file{1..10000}
+RUN mkdir -p /testB && touch /testB/file{1..100000}
 COPY multifiles.py /
 RUN chmod +x /multifiles.py
 RUN apt update && apt install python -y && apt clean all
