@@ -84,10 +84,14 @@ def config_storage_driver(new_driver):
     for line in lines_in_file:
         if "ExecStart" in line:
             if "fd://" in line:  # deb pkg arch
-                lines_in_file[i] = "ExecStart=/usr/bin/dockerd --insecure-registry 192.168.3.51:5000 -s " + \
-                                   new_driver + " -H fd://" + line[-1]
+                lines_in_file[i] = "ExecStart=/usr/bin/dockerd  -H fd:// " \
+                                   "-H unix://var/run/docker.sock -H  tcp://0.0.0.0:2376 " \
+                                   "--insecure-registry 192.168.3.51:5000 -s " + \
+                                   new_driver + line[-1]
             else:  # rpm pkg arch
-                lines_in_file[i] = "ExecStart=/usr/bin/dockerd --insecure-registry 192.168.3.51:5000 -s " + \
+                lines_in_file[i] = "ExecStart=/usr/bin/dockerd " \
+                                   "-H unix://var/run/docker.sock -H  tcp://0.0.0.0:2376 " \
+                                   "--insecure-registry 192.168.3.51:5000 -s " + \
                                    new_driver + line[-1]
             break
         else:
