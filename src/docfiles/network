@@ -1,7 +1,0 @@
-FROM centos:latest
-
-MAINTAINER yujinyu
-
-RUN yum install httpd -y && yum clean all
-
-EXPOSE 80
